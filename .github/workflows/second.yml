@@ -1,0 +1,19 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: 
+      name: dev
+      url: https://dev.azure.com
+    steps:
+      - name: myVar
+        run: echo Im deploying using ${{ vars.MYVARIABLE }} 
+      - name: mySecret
+        run: echo Im deploying using ${{ secrets.mySecret }}
+        
