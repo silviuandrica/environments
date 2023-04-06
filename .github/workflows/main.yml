@@ -15,5 +15,5 @@ jobs:
       - name: myVar
         run: echo Im deploying using ${{ vars.myVar }} 
       - name: mySecret
-        run: echo Im deploying using ${{ mySecret }}
+        run: echo Im deploying using ${{ vars.mySecret }}
         
