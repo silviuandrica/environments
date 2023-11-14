@@ -7,13 +7,6 @@ trigger: none
 
 pr: 
 - main 
-
-schedules:
-- cron: '* * * * *'
-  displayName: Daily midnight build
-  branches:
-    include:
-    - silviu
     
 pool:
   vmImage: ubuntu-latest
