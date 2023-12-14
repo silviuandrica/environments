@@ -10,7 +10,7 @@ pr:
   branches:
     include:
     - main
-  drafts: false  
+  drafts: true  
     
 pool:
   vmImage: ubuntu-latest
