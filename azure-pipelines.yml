@@ -16,4 +16,4 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
+- script: echo Hello, world! Im a PR
