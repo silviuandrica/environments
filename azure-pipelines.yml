@@ -51,3 +51,4 @@ steps:
       } | ConvertTo-Json
       
       Invoke-RestMethod -Uri "https://api.github.com/repos/silviuandrica/environments/statuses/$(Build.SourceVersion)" -Method Post -Headers $headers -Body $body
+
