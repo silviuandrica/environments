@@ -36,7 +36,7 @@ steps:
     script: |
       Write-Host $GITHUB_TOKEN
       # $token = $GITHUB_TOKEN
-      $token = ${{ parameters.token }}
+      $token = "${{ parameters.token }}"
       
       $headers = @{
         Authorization = "Token $token"
