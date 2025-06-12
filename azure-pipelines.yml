@@ -35,7 +35,7 @@ steps:
       }
       
       $body = @{
-        state = "success"  # Options: error, failure, pending, success
+        state = "success"
         context = "azurepipelines/1/silviuandrica.environments"
         description = "Tests passed successfully"
         target_url = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
