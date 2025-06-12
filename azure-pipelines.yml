@@ -16,4 +16,29 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- checkout: self
+  persistCredentials: true
 - script: echo Hello, world!
+- task: PowerShell@2
+  displayName: 'Post custom GitHub status'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $remote_url = & 'git' config remote.origin.url
+      $remote_auth = & 'git' config http.$remote_url.extraheader
+      $remote_auth_token_decode = Write-Host $remote_auth | base64 --decode
+      $token = $remote_auth_token_decode
+      
+      $headers = @{
+        Authorization = "token $token"
+        Accept = "application/vnd.github.v3+json"
+      }
+      
+      $body = @{
+        state = "success"  # Options: error, failure, pending, success
+        context = "azurepipelines/1/silviuandrica.environments"
+        description = "Tests passed successfully"
+        target_url = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
+      } | ConvertTo-Json
+      
+      Invoke-RestMethod -Uri "https://api.github.com/repos/silviuandrica/environments/statuses/$(Build.SourceVersion)" -Method Post -Headers $headers -Body $body
