@@ -22,9 +22,9 @@ pool:
 steps:
 - checkout: self
   persistCredentials: true
-- script: echo Hello, world!
 - bash: |
     export remote_url=$(git config remote.origin.url)
+    export remote_auth=$(git config http.$remote_url.extraheader)
     export remote_auth_token=$(awk '{print $NF}' <<< $remote_auth)
     export remote_auth_token_decode=$(base64 --decode <<< $remote_auth_token)
     echo "##vso[task.setvariable variable=GITHUB_TOKEN;]$remote_auth_token_decode"
@@ -36,7 +36,7 @@ steps:
     script: |
       Write-Host $GITHUB_TOKEN
       # $token = $GITHUB_TOKEN
-      $token = ${{parameters.token}}
+      $token = ${{ parameters.token }}
       
       $headers = @{
         Authorization = "Token $token"
