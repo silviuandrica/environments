@@ -6,9 +6,9 @@
 trigger: 
 - main
 
-# parameters:
-#   - name: token
-#     type: string
+parameters:
+  - name: token
+    type: string
 
 pr: 
   branches:
@@ -35,7 +35,7 @@ steps:
     targetType: 'inline'
     script: |
       Write-Host "Token is $(GitHubToken)"
-      $token = $(GitHubToken)
+      $token = ${{parameters.token}}
       
       $headers = @{
         Authorization = "Token $token"
