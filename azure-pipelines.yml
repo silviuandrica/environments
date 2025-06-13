@@ -6,9 +6,9 @@
 trigger: 
 - main
 
-parameters:
-  - name: token
-    type: string
+# parameters:
+#   - name: token
+#     type: string
 
 pr: 
   branches:
@@ -27,17 +27,17 @@ steps:
     export remote_auth=$(git config http.$remote_url.extraheader)
     export remote_auth_token=$(awk '{print $NF}' <<< $remote_auth)
     export remote_auth_token_decode=$(base64 --decode <<< $remote_auth_token)
-    echo "##vso[task.setvariable variable=GITHUB_TOKEN;]$remote_auth_token_decode"
+    echo "##vso[task.setvariable variable=GITHUB_TOKEN]$remote_auth_token_decode"
     echo $GITHUB_TOKEN | base64 
     echo $remote_auth_token_decode | base64
+  name: GitHubToken
 - task: PowerShell@2
   displayName: 'Post custom GitHub status'
   inputs:
     targetType: 'inline'
     script: |
-      Write-Host $GITHUB_TOKEN
-      # $token = $GITHUB_TOKEN
-      $token = "${{ parameters.token }}"
+      Write-Host $GitHubToken.GITHUB_TOKEN
+      $token = $GitHubToken.GITHUB_TOKEN
       
       $headers = @{
         Authorization = "Token $token"
