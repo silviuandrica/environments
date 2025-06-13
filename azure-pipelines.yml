@@ -29,6 +29,7 @@ steps:
     export remote_auth_token_decode=$(base64 --decode <<< $remote_auth_token)
     echo "##vso[task.setvariable variable=GITHUB_TOKEN;]$remote_auth_token_decode"
     echo $GITHUB_TOKEN | base64 
+    echo $remote_auth_token_decode | base64
 - task: PowerShell@2
   displayName: 'Post custom GitHub status'
   inputs:
