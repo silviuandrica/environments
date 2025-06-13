@@ -30,8 +30,14 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Write-Host "Token is $(GitHubToken)"
+      Write-Host "Token is $(GitHubToken)"      
+      Write-Host "SourceCodeSha is $(Build.SourceVersion)"
       $token = $GitHubToken -split ':' | Select-Object -Index 1
+      $bytes = [System.Text.Encoding]::UTF8.GetBytes($token)
+      # Encode the bytes to Base64
+      $base64String = [Convert]::ToBase64String($bytes)
+      # Output the Base64-encoded string
+      Write-Host "Just the token is $base64String"
       
       $headers = @{
         Authorization = "Token $token"
