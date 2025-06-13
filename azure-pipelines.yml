@@ -3,12 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger: 
-- main
-
-parameters:
-  - name: token
-    type: string
+trigger: none
 
 pr: 
   branches:
@@ -35,7 +30,7 @@ steps:
     targetType: 'inline'
     script: |
       Write-Host "Token is $(GitHubToken)"
-      $token = ${{parameters.token}}
+      $token = $GitHubToken -split ':' | Select-Object -Index 1
       
       $headers = @{
         Authorization = "Token $token"
